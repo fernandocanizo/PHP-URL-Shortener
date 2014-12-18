@@ -29,26 +29,22 @@ endif;
 
 
 // check if the client IP is allowed to shorten
-if($_SERVER['REMOTE_ADDR'] != LIMIT_TO_IP)
-{
+if($_SERVER['REMOTE_ADDR'] != LIMIT_TO_IP):
 	die('You are not allowed to shorten URLs with this service.');
-}
+endif;
 
 // check if the URL is valid
-if(CHECK_URL)
-{
+if(CHECK_URL):
 	$ch = curl_init();
 	curl_setopt($ch, CURLOPT_URL, $url_to_shorten);
 	curl_setopt($ch,  CURLOPT_RETURNTRANSFER, TRUE);
 	$response = curl_exec($ch);
 	$response_status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 	curl_close($ch);
-	if($response_status == '404')
-	{
+	if($response_status == '404'):
 		die('Not a valid URL');
-	}
-
-}
+	endif;
+endif;
 
 // check if the URL has already been shortened
 $safeUrl = $mysqli->real_escape_string($url_to_shorten);
