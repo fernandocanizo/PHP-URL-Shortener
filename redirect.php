@@ -5,7 +5,6 @@
  * Contact the author at http://briancray.com/
  */
 
-ini_set('display_errors', 0);
 
 if(!preg_match('|^[0-9a-zA-Z]{1,6}$|', $_GET['url'])):
 	die('That is not a valid short url'); // TODO return proper JSON

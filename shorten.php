@@ -10,8 +10,6 @@ require_once('config.php');
 require_once('Lib.php');
 
 
-ini_set('display_errors', 0);
-
 $url_to_shorten = get_magic_quotes_gpc() ? stripslashes(trim($_REQUEST['longurl'])) : trim($_REQUEST['longurl']);
 
 if(empty($url_to_shorten)):
