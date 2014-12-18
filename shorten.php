@@ -4,7 +4,7 @@
  * License: http://creativecommons.org/licenses/by/3.0/
  * Contact the author at http://briancray.com/
  */
- 
+
 ini_set('display_errors', 0);
 
 $url_to_shorten = get_magic_quotes_gpc() ? stripslashes(trim($_REQUEST['longurl'])) : trim($_REQUEST['longurl']);
@@ -18,7 +18,7 @@ if(!empty($url_to_shorten) && preg_match('|^https?://|', $url_to_shorten))
 	{
 		die('You are not allowed to shorten URLs with this service.');
 	}
-	
+
 	// check if the URL is valid
 	if(CHECK_URL)
 	{
@@ -32,9 +32,9 @@ if(!empty($url_to_shorten) && preg_match('|^https?://|', $url_to_shorten))
 		{
 			die('Not a valid URL');
 		}
-		
+
 	}
-	
+
 	// check if the URL has already been shortened
 	$already_shortened = mysql_result(mysql_query('SELECT id FROM ' . DB_TABLE. ' WHERE long_url="' . mysql_real_escape_string($url_to_shorten) . '"'), 0, 0);
 	if(!empty($already_shortened))
