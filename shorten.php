@@ -50,7 +50,7 @@ if(!empty($url_to_shorten) && preg_match('|^https?://|', $url_to_shorten))
 
 	else:
 		// URL not in database, insert
-		$safeRemoteAddress = mysqli->real_escape_string($_SERVER['REMOTE_ADDR']);
+		$safeRemoteAddress = $mysqli->real_escape_string($_SERVER['REMOTE_ADDR']);
 		$query = 'insert into ' . DB_TABLE .
 			' (urls_long, urls_created_on, urls_creator) values ("' .
 			$safeUrl . '", "' . time() . '", "' . $safeRemoteAddress . '")';
