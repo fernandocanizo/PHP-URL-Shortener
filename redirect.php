@@ -12,7 +12,7 @@ if(!preg_match('|^[0-9a-zA-Z]{1,6}$|', $_GET['url']))
 	die('That is not a valid short url');
 }
 
-require('config.php');
+require_once('config.php');
 
 $shortened_id = getIDFromShortenedURL($_GET['url']);
 

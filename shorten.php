@@ -11,7 +11,7 @@ $url_to_shorten = get_magic_quotes_gpc() ? stripslashes(trim($_REQUEST['longurl'
 
 if(!empty($url_to_shorten) && preg_match('|^https?://|', $url_to_shorten))
 {
-	require('config.php');
+	require_once('config.php');
 
 	// check if the client IP is allowed to shorten
 	if($_SERVER['REMOTE_ADDR'] != LIMIT_TO_IP)
