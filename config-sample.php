@@ -12,6 +12,11 @@ define('DB_PASSWORD', 'your db password');
 define('DB_HOST', 'localhost');
 define('DB_TABLE', 'urls');
 
+
+// let's use UTC timezone
+date_default_timezone_set('Europe/London');
+
+
 // connect to database
 $mysqli = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 if($mysqli->connect_error):
