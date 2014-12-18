@@ -1,3 +1,11 @@
+<?php
+// First authored by Brian Cray
+// License: http://creativecommons.org/licenses/by/3.0/
+// Contact the author at http://briancray.com/
+
+// Heavily modified by
+// Fernando L. Canizo - http://flc.muriandre.com/
+?>
 <!DOCTYPE html>
 <html>
 <title>URL shortener</title>

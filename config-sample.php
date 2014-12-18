@@ -1,10 +1,10 @@
 <?php
-/*
- * First authored by Brian Cray
- * License: http://creativecommons.org/licenses/by/3.0/
- * Contact the author at http://briancray.com/
- */
+// First authored by Brian Cray
+// License: http://creativecommons.org/licenses/by/3.0/
+// Contact the author at http://briancray.com/
 
+// Heavily modified by
+// Fernando L. Canizo - http://flc.muriandre.com/
 
 
 $serverName = ''; // use this to get different settings for production or development machine

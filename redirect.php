@@ -1,9 +1,11 @@
 <?php
-/*
- * First authored by Brian Cray
- * License: http://creativecommons.org/licenses/by/3.0/
- * Contact the author at http://briancray.com/
- */
+// First authored by Brian Cray
+// License: http://creativecommons.org/licenses/by/3.0/
+// Contact the author at http://briancray.com/
+
+// Heavily modified by
+// Fernando L. Canizo - http://flc.muriandre.com/
+
 
 
 if(!preg_match('|^[0-9a-zA-Z]{1,6}$|', $_GET['url'])):
