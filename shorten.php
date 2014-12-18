@@ -37,7 +37,7 @@ if(!empty($url_to_shorten) && preg_match('|^https?://|', $url_to_shorten))
 
 	// check if the URL has already been shortened
 	$safeUrl = $mysqli->real_escape_string($url_to_shorten);
-	if(false === ($myResult = $mysqli->query('SELECT id FROM ' . DB_TABLE. ' WHERE long_url="' . $safeUrl . '"'))):
+	if(false === ($myResult = $mysqli->query('SELECT urls_id FROM ' . DB_TABLE. ' WHERE urls_long = "' . $safeUrl . '"'))):
 		die("Select query failed: (" . $mysqli->connect_errno . ') ' . $mysqli->connect_error); // TODO replace with proper JSON reply
 	endif;
 
@@ -46,13 +46,13 @@ if(!empty($url_to_shorten) && preg_match('|^https?://|', $url_to_shorten))
 
 	if(null !== $row):
 		// URL has already been shortened
-		$shortened_url = getShortenedURLFromID($row['']); // TODO this won't work now. Review after I change column names
+		$shortened_url = getShortenedURLFromID($row['urls_id']);
 
 	else:
 		// URL not in database, insert
 		$safeRemoteAddress = mysqli->real_escape_string($_SERVER['REMOTE_ADDR']);
 		$query = 'insert into ' . DB_TABLE .
-			' (long_url, created, creator) values ("' .
+			' (urls_long, urls_created_on, urls_creator) values ("' .
 			$safeUrl . '", "' . time() . '", "' . $safeRemoteAddress . '")';
 
 		if(false === $mysqli->query($query)):
