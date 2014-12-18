@@ -6,11 +6,11 @@
  */
 
 // db options
-define('DB_NAME', 'your db name');
+define('DB_NAME', 'ushort');
 define('DB_USER', 'your db usernae');
 define('DB_PASSWORD', 'your db password');
 define('DB_HOST', 'localhost');
-define('DB_TABLE', 'shortenedurls');
+define('DB_TABLE', 'urls');
 
 // connect to database
 mysql_connect(DB_HOST, DB_USER, DB_PASSWORD);
