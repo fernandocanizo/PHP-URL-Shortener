@@ -32,7 +32,6 @@ if(CACHE)
 		$myResult->free();
 
 		$long_url = $row['']; // TODO update with new columns names
-		@mkdir(CACHE_DIR, 0777); // TODO remove this, already created it on repo
 		$handle = fopen(CACHE_DIR . $shortened_id, 'w+');
 		fwrite($handle, $long_url);
 		fclose($handle);
