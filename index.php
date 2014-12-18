@@ -16,7 +16,7 @@
 <label for="longurl">URL to shorten</label> <input type="text" name="longurl" id="longurl"> <input type="submit" value="Shorten">
 </form>
 </form>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+<script src="http://code.jquery.com/jquery-2.1.3.min.js"></script>
 <script>
 $(function () {
 	$('#shortener').submit(function () {
