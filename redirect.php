@@ -18,11 +18,21 @@ $shortened_id = getIDFromShortenedURL($_GET['url']);
 
 if(CACHE)
 {
+	$safeShortenedId = mysqli->real_escape_string($shortened_id);
 	$long_url = file_get_contents(CACHE_DIR . $shortened_id);
 	if(empty($long_url) || !preg_match('|^https?://|', $long_url))
 	{
-		$long_url = mysql_result(mysql_query('SELECT long_url FROM ' . DB_TABLE . ' WHERE id="' . mysql_real_escape_string($shortened_id) . '"'), 0, 0);
-		@mkdir(CACHE_DIR, 0777);
+		$query = 'select long_url from ' . DB_TABLE . ' where id="' . $safeShortenedId . '"';
+
+		if(false === ($myResult = $mysqli->query($query))):
+			die("Select query failed: (" . $mysqli->connect_errno . ') ' . $mysqli->connect_error); // TODO replace with proper JSON reply
+		endif;
+
+		$row = $myResult->fetch_assoc();
+		$myResult->free();
+
+		$long_url = $row['']; // TODO update with new columns names
+		@mkdir(CACHE_DIR, 0777); // TODO remove this, already created it on repo
 		$handle = fopen(CACHE_DIR . $shortened_id, 'w+');
 		fwrite($handle, $long_url);
 		fclose($handle);
@@ -30,12 +40,22 @@ if(CACHE)
 }
 else
 {
-	$long_url = mysql_result(mysql_query('SELECT long_url FROM ' . DB_TABLE . ' WHERE id="' . mysql_real_escape_string($shortened_id) . '"'), 0, 0);
+	$query = 'select long_url from ' . DB_TABLE . ' where id="' . $safeShortenedId . '"';
+	if(false === ($myResult = $mysqli->query($query))):
+		die("Select query failed: (" . $mysqli->connect_errno . ') ' . $mysqli->connect_error); // TODO replace with proper JSON reply
+	endif;
+
+	$row = $myResult->fetch_assoc();
+	$myResult->free();
+	$long_url = $row['']; // TODO put proper column name
 }
 
 if(TRACK)
 {
-	mysql_query('UPDATE ' . DB_TABLE . ' SET referrals=referrals+1 WHERE id="' . mysql_real_escape_string($shortened_id) . '"');
+	$query = 'update ' . DB_TABLE . ' set referrals = referrals + 1 where id = "' . $safeShortenedId . '"';
+	if(false === $mysqli->query($query)):
+		die("Couldn't update referrals: (" . $mysqli->connect_errno . ') ' . $mysqli->connect_error); // TODO replace with proper JSON reply
+	endif;
 }
 
 header('HTTP/1.1 301 Moved Permanently');

@@ -36,20 +36,31 @@ if(!empty($url_to_shorten) && preg_match('|^https?://|', $url_to_shorten))
 	}
 
 	// check if the URL has already been shortened
-	$already_shortened = mysql_result(mysql_query('SELECT id FROM ' . DB_TABLE. ' WHERE long_url="' . mysql_real_escape_string($url_to_shorten) . '"'), 0, 0);
-	if(!empty($already_shortened))
-	{
+	$safeUrl = $mysqli->real_escape_string($url_to_shorten);
+	if(false === ($myResult = $mysqli->query('SELECT id FROM ' . DB_TABLE. ' WHERE long_url="' . $safeUrl . '"'))):
+		die("Select query failed: (" . $mysqli->connect_errno . ') ' . $mysqli->connect_error); // TODO replace with proper JSON reply
+	endif;
+
+	$row = $myResult->fetch_assoc();
+	$myResult->free();
+
+	if(null !== $row):
 		// URL has already been shortened
-		$shortened_url = getShortenedURLFromID($already_shortened);
-	}
-	else
-	{
+		$shortened_url = getShortenedURLFromID($row['']); // TODO this won't work now. Review after I change column names
+
+	else:
 		// URL not in database, insert
-		mysql_query('LOCK TABLES ' . DB_TABLE . ' WRITE;');
-		mysql_query('INSERT INTO ' . DB_TABLE . ' (long_url, created, creator) VALUES ("' . mysql_real_escape_string($url_to_shorten) . '", "' . time() . '", "' . mysql_real_escape_string($_SERVER['REMOTE_ADDR']) . '")');
-		$shortened_url = getShortenedURLFromID(mysql_insert_id());
-		mysql_query('UNLOCK TABLES');
-	}
+		$safeRemoteAddress = mysqli->real_escape_string($_SERVER['REMOTE_ADDR']);
+		$query = 'insert into ' . DB_TABLE .
+			' (long_url, created, creator) values ("' .
+			$safeUrl . '", "' . time() . '", "' . $safeRemoteAddress . '")';
+
+		if(false === $mysqli->query($query)):
+			die("Failed to insert new shortened url: (" . $mysqli->connect_errno . ') ' . $mysqli->connect_error); // TODO replace with proper JSON reply
+		endif;
+		$shortened_url = getShortenedURLFromID($mysqli->insert_id);
+	endif;
+
 	echo BASE_HREF . $shortened_url;
 }
 

@@ -13,8 +13,11 @@ define('DB_HOST', 'localhost');
 define('DB_TABLE', 'urls');
 
 // connect to database
-mysql_connect(DB_HOST, DB_USER, DB_PASSWORD);
-mysql_select_db(DB_NAME);
+$mysqli = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
+if($mysqli->connect_error):
+	die('Connect Error (' . $mysqli->connect_errno . ') ' . $mysqli->connect_error);
+endif;
+
 
 // base location of script (include trailing slash)
 define('BASE_HREF', 'http://' . $_SERVER['HTTP_HOST'] . '/');
