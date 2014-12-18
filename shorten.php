@@ -5,14 +5,17 @@
  * Contact the author at http://briancray.com/
  */
 
+
+require_once('config.php');
+require_once('Lib.php');
+
+
 ini_set('display_errors', 0);
 
 $url_to_shorten = get_magic_quotes_gpc() ? stripslashes(trim($_REQUEST['longurl'])) : trim($_REQUEST['longurl']);
 
 if(!empty($url_to_shorten) && preg_match('|^https?://|', $url_to_shorten))
 {
-	require_once('config.php');
-
 	// check if the client IP is allowed to shorten
 	if($_SERVER['REMOTE_ADDR'] != LIMIT_TO_IP)
 	{
@@ -46,7 +49,7 @@ if(!empty($url_to_shorten) && preg_match('|^https?://|', $url_to_shorten))
 
 	if(null !== $row):
 		// URL has already been shortened
-		$shortened_url = getShortenedURLFromID($row['urls_id']);
+		$shortened_url = Lib::getShortenedURLFromID($row['urls_id']);
 
 	else:
 		// URL not in database, insert
@@ -58,19 +61,8 @@ if(!empty($url_to_shorten) && preg_match('|^https?://|', $url_to_shorten))
 		if(false === $mysqli->query($query)):
 			die("Failed to insert new shortened url: (" . $mysqli->connect_errno . ') ' . $mysqli->connect_error); // TODO replace with proper JSON reply
 		endif;
-		$shortened_url = getShortenedURLFromID($mysqli->insert_id);
+		$shortened_url = Lib::getShortenedURLFromID($mysqli->insert_id);
 	endif;
 
 	echo BASE_HREF . $shortened_url;
-}
-
-function getShortenedURLFromID ($integer, $base = ALLOWED_CHARS)
-{
-	$length = strlen($base);
-	while($integer > $length - 1)
-	{
-		$out = $base[fmod($integer, $length)] . $out;
-		$integer = floor( $integer / $length );
-	}
-	return $base[$integer] . $out;
 }
