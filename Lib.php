@@ -1,6 +1,6 @@
 <?php
 // Creation Date: 18 Dec 2014
-// Author: Fernando Canizo (aka conan) - http://conan.muriandre.com/
+// Author: Fernando L. Canizo - http://flc.muriandre.com/
 
 
 abstract class Lib {
