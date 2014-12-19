@@ -4,9 +4,6 @@ set character_set_results = 'utf8';
 
 
 -- Clean start
-drop database if exists ushort;
-create database ushort;
-use ushort;
 
 drop table if exists urls;
 create table urls (
