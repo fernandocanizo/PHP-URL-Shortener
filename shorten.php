@@ -47,7 +47,8 @@ endif;
 
 // check if the URL has already been shortened
 $safeUrl = $mysqli->real_escape_string($url_to_shorten);
-if(false === ($myResult = $mysqli->query('SELECT urls_id FROM ' . DB_TABLE. ' WHERE urls_long = "' . $safeUrl . '"'))):
+$query = 'select urls_id from ' . DB_TABLE. ' where urls_long = "' . $safeUrl . '"';
+if(false === ($myResult = $mysqli->query($query))):
 	die("Select query failed: (" . $mysqli->connect_errno . ') ' . $mysqli->connect_error); // TODO replace with proper JSON reply
 endif;
 
