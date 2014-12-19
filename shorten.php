@@ -1,6 +1,5 @@
 <?php
 // First authored by Brian Cray
-// License: http://creativecommons.org/licenses/by/3.0/
 // Contact the author at http://briancray.com/
 
 // Heavily modified by
