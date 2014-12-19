@@ -18,7 +18,7 @@ require_once('Lib.php');
 $shortened_id = Lib::getIDFromShortenedURL($_GET['url']);
 
 if(CACHE):
-	$safeShortenedId = mysqli->real_escape_string($shortened_id);
+	$safeShortenedId = $mysqli->real_escape_string($shortened_id);
 	$long_url = file_get_contents(CACHE_DIR . $shortened_id);
 	if(empty($long_url) || !preg_match('|^https?://|', $long_url)):
 		$query = 'select urls_long from ' . DB_TABLE . ' where urls_id = "' . $safeShortenedId . '"';
