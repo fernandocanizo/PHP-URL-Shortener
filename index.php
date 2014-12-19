@@ -20,7 +20,10 @@
 			<input type="submit" id="submitUrl" value="Shorten">
 		</form>
 
-		<div id="result"></div>
+		<div>
+			<p id="resultText"></p>
+			<a href="" id="resultLink"></a>
+		</div>
 
 		<script src="http://code.jquery.com/jquery-2.1.3.min.js"></script>
 
@@ -31,7 +34,9 @@ $(function () {
 			data: { longurl: $('#longurl').val() },
 			url: 'shorten.php',
 			complete: function (XMLHttpRequest, textStatus) {
-				$('#result').text(XMLHttpRequest.responseText);
+				$('#resultText').text(XMLHttpRequest.responseText);
+				$('#resultLink').attr('href', XMLHttpRequest.responseText);
+				$('#resultLink').text($('#longurl').val());
 			}
 		});
 
