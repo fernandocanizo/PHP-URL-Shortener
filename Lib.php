@@ -22,7 +22,9 @@ abstract class Lib {
 
 
 	public static function getShortenedURLFromID($integer, $base = ALLOWED_CHARS) {
+		$out = '';
 		$length = strlen($base);
+
 		while($integer > $length - 1):
 			$out = $base[fmod($integer, $length)] . $out;
 			$integer = floor( $integer / $length );
