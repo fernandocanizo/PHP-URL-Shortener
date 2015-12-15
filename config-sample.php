@@ -69,3 +69,6 @@ define('CACHE', TRUE);
 
 // if so, where will the cache files be stored? (include trailing slash)
 define('CACHE_DIR', dirname(__FILE__) . '/cache/');
+
+// all URLS will be one-use only. Requires TRACK to be set to true
+define('THROWAWAY_URLS', true);
